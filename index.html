@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Literacy: 5–8</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #faf9f6;
+  --white: #ffffff;
+  --ink: #1a1a2e;
+  --ink-mid: #3d3d5c;
+  --ink-muted: #8888aa;
+  --ink-faint: #c4c4d8;
+  --indigo: #4338ca;
+  --indigo-light: #eef2ff;
+  --indigo-mid: #818cf8;
+  --sage: #f0f4f0;
+  --border: rgba(26,26,46,0.08);
+  --shadow-sm: 0 1px 4px rgba(26,26,46,0.06), 0 2px 12px rgba(26,26,46,0.04);
+  --shadow-md: 0 4px 16px rgba(26,26,46,0.08), 0 1px 4px rgba(26,26,46,0.04);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* ─── LANDING ─── */
+#screen-landing {
+  align-items: center;
+  justify-content: center;
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+#screen-landing::before {
+  content: '';
+  position: absolute;
+  top: -180px; left: 50%;
+  transform: translateX(-50%);
+  width: 700px; height: 700px;
+  background: radial-gradient(ellipse, rgba(99,102,241,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.landing-inner {
+  text-align: center;
+  width: 100%;
+  max-width: 480px;
+  padding: 48px 24px;
+  position: relative;
+  z-index: 1;
+}
+.landing-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--indigo);
+  background: var(--indigo-light);
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 24px;
+}
+.landing-title {
+  font-family: 'Fraunces', serif;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+.landing-sub {
+  font-size: 16px;
+  color: var(--ink-mid);
+  line-height: 1.65;
+  margin-bottom: 8px;
+  font-weight: 300;
+}
+.landing-support {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-bottom: 40px;
+}
+.input-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.field {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+  box-shadow: var(--shadow-sm);
+}
+.field::placeholder { color: var(--ink-muted); }
+.field:focus { border-color: var(--indigo-mid); }
+.btn-arrow {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--indigo);
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 14px;
+  transition: background 0.15s, transform 0.1s;
+  box-shadow: 0 4px 14px rgba(67,56,202,0.3);
+}
+.btn-arrow:hover { background: #3730a3; transform: translateY(-1px); }
+.btn-arrow svg { color: white; }
+.landing-hint { font-size: 12px; color: var(--ink-muted); }
+
+/* ─── DASHBOARD ─── */
+#screen-dashboard { background: var(--cream); align-items: stretch; }
+.dash-header { padding: 56px 0 32px; text-align: center; }
+.dash-title {
+  font-family: 'Fraunces', serif;
+  font-size: 38px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.dash-welcome { font-size: 15px; color: var(--ink-mid); font-weight: 300; }
+.dash-count { font-size: 13px; color: var(--ink-muted); margin-top: 4px; }
+.dash-body {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+  width: 100%;
+}
+.new-plan-card {
+  background: var(--indigo);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  box-shadow: 0 6px 24px rgba(67,56,202,0.25);
+}
+.new-plan-label { font-size: 17px; font-weight: 600; color: white; margin-bottom: 4px; }
+.new-plan-sub { font-size: 13px; color: rgba(255,255,255,0.65); font-weight: 300; }
+.btn-get-started {
+  background: white;
+  color: var(--indigo);
+  border: none;
+  padding: 11px 22px;
+  border-radius: var(--radius-pill);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+.btn-get-started:hover { opacity: 0.9; }
+.saved-section-header { margin-bottom: 16px; }
+.saved-section-title {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+.saved-section-sub { font-size: 13px; color: var(--ink-muted); font-weight: 300; }
+.saved-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.lesson-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.lesson-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.lesson-card-grade {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--indigo);
+  background: var(--indigo-light);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 12px;
+  align-self: flex-start;
+}
+.lesson-card-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.lesson-card-sub {
+  font-size: 13px;
+  color: var(--ink-muted);
+  font-weight: 300;
+  line-height: 1.5;
+  flex: 1;
+  margin-bottom: 16px;
+}
+.lesson-card-meta {
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lesson-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: var(--sage);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  color: var(--ink-mid);
+  font-weight: 500;
+}
+.lesson-card-actions { display: flex; gap: 8px; }
+.btn-edit {
+  flex: 1;
+  padding: 9px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-mid);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-edit:hover { border-color: var(--indigo-mid); color: var(--indigo); }
+.btn-view {
+  flex: 1;
+  padding: 9px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--indigo);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-view:hover { background: #3730a3; }
+
+/* ─── ONBOARDING MODAL ─── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(26,26,46,0.4);
+  backdrop-filter: blur(4px);
+  z-index: 500;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.modal-overlay.hidden { display: none; }
+.modal-box {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 36px 40px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(26,26,46,0.15);
+}
+.modal-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--indigo);
+  margin-bottom: 12px;
+}
+.modal-title {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.modal-body {
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 28px;
+}
+.modal-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.modal-step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.modal-step-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--indigo-light);
+  color: var(--indigo);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.modal-step-text { font-size: 13px; color: var(--ink-mid); line-height: 1.55; }
+.modal-step-text strong { color: var(--ink); font-weight: 600; }
+.btn-modal-close {
+  width: 100%;
+  padding: 13px;
+  background: var(--indigo);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-modal-close:hover { background: #3730a3; }
+
+/* ─── DIFFICULTY BADGE ─── */
+.lp-hero-tags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.lp-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+.lp-tag-grade { color: var(--indigo); background: var(--indigo-light); }
+.lp-tag-diff { color: #6b7280; background: var(--sage); }
+
+/* ─── CARD COMPLETED STATE ─── */
+.lesson-card.completed {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}
+.lesson-card.completed .lesson-card-title { color: var(--ink-mid); }
+.completed-banner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #16a34a;
+  background: #dcfce7;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 12px;
+  align-self: flex-start;
+}
+.btn-mark-done {
+  flex: 1;
+  padding: 9px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid #bbf7d0;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #16a34a;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-mark-done:hover { background: #dcfce7; }
+.btn-delete {
+  width: 36px;
+  padding: 9px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--ink-faint);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.btn-delete:hover { border-color: #fca5a5; color: #dc2626; }
+
+/* ─── FEEDBACK MODAL ─── */
+.feedback-overlay {
+  position: fixed; inset: 0;
+  background: rgba(26,26,46,0.4);
+  backdrop-filter: blur(4px);
+  z-index: 500;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.feedback-overlay.hidden { display: none; }
+.feedback-box {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 36px 40px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(26,26,46,0.15);
+}
+.feedback-title {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.feedback-lesson-name {
+  font-size: 13px;
+  color: var(--ink-muted);
+  font-weight: 300;
+  margin-bottom: 28px;
+}
+.feedback-q {
+  margin-bottom: 24px;
+}
+.feedback-q-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.feedback-options {
+  display: flex;
+  gap: 8px;
+}
+.feedback-opt {
+  flex: 1;
+  padding: 10px 8px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--ink-mid);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+  user-select: none;
+}
+.feedback-opt:hover { border-color: var(--indigo-mid); background: var(--indigo-light); }
+.feedback-opt.selected { border-color: var(--indigo); background: var(--indigo-light); color: var(--indigo); font-weight: 600; }
+.feedback-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  resize: none;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+.feedback-textarea::placeholder { color: var(--ink-faint); }
+.feedback-textarea:focus { border-color: var(--indigo-mid); background: white; }
+.feedback-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 28px;
+}
+.btn-feedback-skip {
+  flex: 1;
+  padding: 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-mid);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-feedback-skip:hover { border-color: var(--ink-muted); }
+.btn-feedback-submit {
+  flex: 2;
+  padding: 12px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--indigo);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-feedback-submit:hover { background: #3730a3; }
+
+/* ─── PRINT STYLES ─── */
+@media print {
+  .screen { display: none !important; }
+  .screen.active { display: block !important; }
+  #screen-lesson { background: white !important; }
+  .lesson-nav { display: none !important; }
+  .chatbot-fab { display: none !important; }
+  .modal-overlay, .feedback-overlay { display: none !important; }
+  body { background: white !important; font-size: 12px; }
+  .lesson-content { max-width: 100%; padding: 20px; }
+  .lp-hero { box-shadow: none; border: 1px solid #ddd; }
+  .lp-card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+  .takeaway-card { background: #f5f5f5 !important; }
+  .discussion-prompt { background: #f5f5f5 !important; border-left: 3px solid #333; }
+  .scenario-box { background: #fff8f0 !important; }
+  .lp-title { font-size: 22px; }
+}
+
+/* Empty state */
+.empty-state {
+  border: 1.5px dashed var(--ink-faint);
+  border-radius: var(--radius);
+  padding: 40px 24px;
+  text-align: center;
+}
+.empty-title {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  margin-bottom: 6px;
+}
+.empty-sub { font-size: 13px; color: var(--ink-faint); font-weight: 300; }
+
+/* ─── QUESTIONNAIRE ─── */
+#screen-questionnaire { background: var(--cream); align-items: center; }
+.q-header { text-align: center; padding: 48px 24px 32px; }
+.q-title {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.q-sub { font-size: 15px; color: var(--ink-muted); font-weight: 300; }
+.q-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 36px 40px;
+  max-width: 680px;
+  width: calc(100% - 48px);
+  margin: 0 auto;
+}
+.q-section { margin-bottom: 28px; }
+.q-section:last-of-type { margin-bottom: 0; }
+.q-section-label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.q-section-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+/* Tooltip trigger */
+.q-info {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-faint);
+  background: transparent;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color 0.15s, color 0.15s;
+}
+.q-info:hover { border-color: var(--indigo-mid); color: var(--indigo); }
+.q-tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: white;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  width: 220px;
+  text-align: left;
+  z-index: 999;
+  box-shadow: var(--shadow-md);
+  pointer-events: none;
+}
+.q-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--ink);
+}
+.q-info:hover .q-tooltip { display: block; }
+
+.q-options { display: flex; gap: 8px; flex-wrap: wrap; }
+.q-option {
+  flex: 1;
+  min-width: 100px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--cream);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+  user-select: none;
+}
+.q-option:hover { border-color: var(--indigo-mid); background: var(--indigo-light); }
+.q-option.selected { border-color: var(--indigo); background: var(--indigo-light); }
+.q-option-main {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  display: block;
+}
+.q-option.selected .q-option-main { color: var(--indigo); }
+.q-option-desc {
+  font-size: 11px;
+  color: var(--ink-muted);
+  display: block;
+  line-height: 1.4;
+  margin-top: 3px;
+}
+.q-option.selected .q-option-desc { color: #6366f1; }
+.q-divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+.q-text-input {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+  resize: none;
+}
+.q-text-input::placeholder { color: var(--ink-faint); }
+.q-text-input:focus { border-color: var(--indigo-mid); background: white; }
+.q-footer { text-align: center; padding: 28px 24px 48px; }
+.q-hint { font-size: 12px; color: var(--ink-muted); margin-top: 12px; }
+
+/* ─── LOADING ─── */
+#screen-loading { background: var(--cream); align-items: center; justify-content: center; }
+.loading-inner { text-align: center; }
+.loading-title {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 8px;
+  font-style: italic;
+}
+.loading-sub { font-size: 14px; color: var(--ink-muted); font-weight: 300; margin-bottom: 32px; }
+.spinner {
+  width: 36px; height: 36px;
+  border: 2.5px solid var(--indigo-light);
+  border-top-color: var(--indigo);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── MATCH ─── */
+#screen-match { background: var(--cream); align-items: center; justify-content: center; }
+.match-inner {
+  max-width: 560px;
+  width: 100%;
+  padding: 48px 24px;
+  text-align: center;
+}
+.match-icon {
+  width: 48px; height: 48px;
+  background: var(--indigo-light);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+}
+.match-title {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.match-sub { font-size: 14px; color: var(--ink-muted); font-weight: 300; margin-bottom: 28px; }
+.match-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  padding: 28px 28px 24px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+.match-grade {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--indigo);
+  background: var(--indigo-light);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 12px;
+}
+.match-lesson-title {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.match-lesson-sub { font-size: 14px; color: var(--ink-muted); font-weight: 300; margin-bottom: 16px; }
+.match-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--ink-mid);
+  background: var(--sage);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 20px;
+}
+.match-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 16px; }
+
+/* Why this works section */
+.match-why-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 12px;
+}
+.match-reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.match-reason {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+.match-reason-icon {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #dcfce7;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.btn-view-plan {
+  width: 100%;
+  padding: 14px;
+  background: var(--indigo);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-view-plan:hover { background: #3730a3; }
+.match-secondary {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.match-secondary-hint { font-size: 13px; color: var(--ink-muted); }
+.btn-retake {
+  padding: 9px 18px;
+  border: 1.5px solid var(--indigo);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--indigo);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-retake:hover { background: var(--indigo-light); }
+
+/* ─── LESSON PLAN ─── */
+#screen-lesson { background: var(--cream); align-items: stretch; }
+.lesson-nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--ink-mid);
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s, color 0.15s;
+}
+.btn-back:hover { background: var(--cream); color: var(--ink); }
+.nav-actions { display: flex; align-items: center; gap: 4px; }
+.time-badge {
+  font-size: 12px;
+  color: var(--ink-mid);
+  background: var(--sage);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  margin-right: 8px;
+  font-weight: 500;
+}
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-mid);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-btn:hover { background: var(--cream); color: var(--ink); }
+.nav-btn.save { color: var(--indigo); }
+.nav-btn.save:hover { background: var(--indigo-light); }
+.lesson-content {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+  width: 100%;
+}
+.lp-hero {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 32px 36px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.lp-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 10px;
+}
+.lp-title {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.lp-subtitle { font-size: 15px; color: var(--ink-muted); font-weight: 300; }
+.lp-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 28px 32px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+}
+.lp-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 16px;
+}
+.lp-card p { font-size: 14px; color: var(--ink-mid); line-height: 1.7; margin-bottom: 10px; }
+.lp-card p:last-child { margin-bottom: 0; }
+.lp-card ul, .lp-card ol { padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.lp-card ul li {
+  display: flex; gap: 10px;
+  font-size: 14px; color: var(--ink-mid); line-height: 1.6; align-items: flex-start;
+}
+.lp-card ul li::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--indigo); margin-top: 7px; flex-shrink: 0;
+}
+.lp-card ol li { display: flex; gap: 12px; font-size: 14px; color: var(--ink-mid); line-height: 1.65; align-items: flex-start; }
+.step-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--indigo-light); color: var(--indigo);
+  font-size: 11px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.vocab-list { display: flex; flex-direction: column; gap: 16px; }
+.vocab-term { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.vocab-def { font-size: 13px; color: var(--ink-muted); line-height: 1.55; font-weight: 300; }
+.materials-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.material-tag { padding: 5px 12px; background: var(--sage); border-radius: var(--radius-pill); font-size: 12px; color: var(--ink-mid); font-weight: 500; }
+.step-block { padding: 16px 0; border-top: 1px solid var(--border); }
+.step-block:first-of-type { border-top: none; padding-top: 0; }
+.step-label { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--indigo); margin-bottom: 8px; }
+.step-body { font-size: 14px; color: var(--ink-mid); line-height: 1.7; }
+.step-body strong { color: var(--ink); font-weight: 600; }
+.discussion-prompt {
+  background: var(--indigo-light);
+  border-left: 3px solid var(--indigo);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 14px 18px;
+  font-size: 14px; color: var(--ink-mid); line-height: 1.6; font-style: italic; margin: 12px 0;
+}
+.questions-list { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+.question-item { display: flex; gap: 10px; font-size: 14px; color: var(--ink-mid); line-height: 1.6; align-items: flex-start; }
+.q-mark {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 1.5px solid var(--indigo-mid); color: var(--indigo);
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.takeaway-card { background: var(--indigo-light); border-radius: var(--radius-sm); padding: 14px 18px; margin-bottom: 8px; font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
+.takeaway-card:last-child { margin-bottom: 0; }
+.sub-section-title { font-size: 13px; font-weight: 600; color: var(--ink); margin: 16px 0 8px; }
+.scenario-box { background: #fff8f0; border: 1px solid #fde8cc; border-radius: var(--radius-sm); padding: 14px 18px; font-size: 14px; color: #7c4d18; line-height: 1.65; margin: 12px 0; }
+
+/* ─── CHATBOT ─── */
+.chatbot-fab {
+  position: fixed; bottom: 28px; right: 28px;
+  display: flex; align-items: center; gap: 10px; z-index: 200;
+}
+.chatbot-label {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius-pill); padding: 8px 14px;
+  font-size: 13px; font-weight: 500; color: var(--ink-mid); box-shadow: var(--shadow-sm);
+}
+.chatbot-btn {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--indigo); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(67,56,202,0.3); flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- SCREEN 1: LANDING -->
+<div class="screen active" id="screen-landing">
+  <div class="landing-inner">
+    <div class="landing-eyebrow">Curriculum Platform</div>
+    <h1 class="landing-title">AI Literacy:<br>5–8</h1>
+    <p class="landing-sub">A classroom curriculum that helps students become skeptical, informed, and empowered AI users.</p>
+    <p class="landing-support">Used by teachers to build AI literacy lessons tailored to their classroom.</p>
+    <div class="input-stack">
+      <input class="field" type="text" id="name-input" placeholder="Full Name">
+      <input class="field" type="email" placeholder="Email Address">
+    </div>
+    <button class="btn-arrow" id="landing-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+    <p class="landing-hint">Create your free account to get started.</p>
+  </div>
+</div>
+
+<!-- SCREEN 2: DASHBOARD -->
+<div class="screen" id="screen-dashboard">
+  <div class="dash-header">
+    <h1 class="dash-title">My Lesson Plans</h1>
+    <p class="dash-welcome">Welcome, <span id="dash-name">there</span></p>
+    <p class="dash-count" id="dash-count">You have 0 saved lesson plans</p>
+  </div>
+  <div class="dash-body">
+    <div class="new-plan-card">
+      <div class="new-plan-text">
+        <div class="new-plan-label">New Lesson Plan</div>
+        <div class="new-plan-sub">Answer a few questions and we'll find the right lesson for your class</div>
+      </div>
+      <button class="btn-get-started" id="btn-get-started">Get Started →</button>
+    </div>
+    <div class="saved-section-header">
+      <div class="saved-section-title">Your Saved Plans</div>
+      <div class="saved-section-sub">Pick up where you left off</div>
+    </div>
+    <div id="saved-grid" class="saved-grid">
+      <div class="empty-state">
+        <div class="empty-title">No lesson plans yet</div>
+        <div class="empty-sub">Create your first lesson plan to get started. It only takes a few minutes.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 3: QUESTIONNAIRE -->
+<div class="screen" id="screen-questionnaire">
+  <div class="q-header">
+    <h1 class="q-title">Create Your Lesson Plan</h1>
+    <p class="q-sub">Tailor to your students' needs.</p>
+  </div>
+  <div class="q-card">
+
+    <div class="q-section">
+      <div class="q-section-label-row">
+        <span class="q-section-label">Grade Range</span>
+      </div>
+      <div class="q-options">
+        <div class="q-option" data-group="grade" data-value="5-6"><span class="q-option-main">5–6</span></div>
+        <div class="q-option" data-group="grade" data-value="6-7"><span class="q-option-main">6–7</span></div>
+        <div class="q-option" data-group="grade" data-value="7-8"><span class="q-option-main">7–8</span></div>
+      </div>
+    </div>
+    <hr class="q-divider">
+
+    <div class="q-section">
+      <div class="q-section-label-row">
+        <span class="q-section-label">Time Restraint</span>
+      </div>
+      <div class="q-options">
+        <div class="q-option" data-group="time"><span class="q-option-main">&lt;30 min</span></div>
+        <div class="q-option" data-group="time"><span class="q-option-main">30–60 min</span></div>
+        <div class="q-option" data-group="time"><span class="q-option-main">&gt;60 min</span></div>
+      </div>
+    </div>
+    <hr class="q-divider">
+
+    <div class="q-section">
+      <div class="q-section-label-row">
+        <span class="q-section-label">Level of Difficulty</span>
+        <div class="q-info">?
+          <div class="q-tooltip"><strong>Basic</strong> — Foundational concepts, no prior AI knowledge needed.<br><br><strong>Medium</strong> — Some AI familiarity assumed, more discussion-heavy.<br><br><strong>Advanced</strong> — For students who've used AI before; critical thinking focused.</div>
+        </div>
+      </div>
+      <div class="q-options">
+        <div class="q-option" data-group="diff"><span class="q-option-main">Basic</span></div>
+        <div class="q-option" data-group="diff"><span class="q-option-main">Medium</span></div>
+        <div class="q-option" data-group="diff"><span class="q-option-main">Advanced</span></div>
+      </div>
+    </div>
+    <hr class="q-divider">
+
+    <div class="q-section">
+      <div class="q-section-label-row">
+        <span class="q-section-label">Classroom Technology Access</span>
+        <div class="q-info">?
+          <div class="q-tooltip"><strong>None</strong> — No student devices; teacher display only.<br><br><strong>Shared</strong> — A few devices shared among students.<br><br><strong>1:1</strong> — Every student has their own device.</div>
+        </div>
+      </div>
+      <div class="q-options">
+        <div class="q-option" data-group="tech" data-value="none"><span class="q-option-main">None</span></div>
+        <div class="q-option" data-group="tech" data-value="shared"><span class="q-option-main">Shared</span></div>
+        <div class="q-option" data-group="tech" data-value="1:1"><span class="q-option-main">1:1</span></div>
+      </div>
+    </div>
+    <hr class="q-divider">
+
+    <div class="q-section">
+      <div class="q-section-label-row">
+        <span class="q-section-label">Classroom Size</span>
+      </div>
+      <div class="q-options">
+        <div class="q-option" data-group="size">
+          <span class="q-option-main">Small</span>
+          <span class="q-option-desc">Under 15 students</span>
+        </div>
+        <div class="q-option" data-group="size">
+          <span class="q-option-main">Medium</span>
+          <span class="q-option-desc">15–25 students</span>
+        </div>
+        <div class="q-option" data-group="size">
+          <span class="q-option-main">Large</span>
+          <span class="q-option-desc">25+ students</span>
+        </div>
+      </div>
+    </div>
+    <hr class="q-divider">
+
+    <div class="q-section">
+      <div class="q-section-label-row">
+        <span class="q-section-label">Prior Exposure to AI</span>
+        <div class="q-info">?
+          <div class="q-tooltip"><strong>None</strong> — Students have never used an AI tool.<br><br><strong>Some</strong> — Students have used AI once or twice.<br><br><strong>Regular</strong> — Students use AI tools frequently.</div>
+        </div>
+      </div>
+      <div class="q-options">
+        <div class="q-option" data-group="prior" data-value="none"><span class="q-option-main">None</span></div>
+        <div class="q-option" data-group="prior" data-value="some"><span class="q-option-main">Some</span></div>
+        <div class="q-option" data-group="prior" data-value="regular"><span class="q-option-main">Regular</span></div>
+      </div>
+    </div>
+    <hr class="q-divider">
+
+    <div class="q-section">
+      <div class="q-section-label-row">
+        <span class="q-section-label">Goals or Focus Area <span style="font-weight:300;color:var(--ink-muted);font-size:13px;font-style:italic;">(Optional)</span></span>
+      </div>
+      <textarea class="q-text-input" rows="3" placeholder="What do you most want students to walk away understanding?"></textarea>
+    </div>
+
+  </div>
+  <div class="q-footer">
+    <button class="btn-arrow" id="q-submit-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+    <p class="q-hint">We'll use your selections to find the best-fit lesson plan</p>
+  </div>
+</div>
+
+<!-- SCREEN 4: LOADING -->
+<div class="screen" id="screen-loading">
+  <div class="loading-inner">
+    <p class="loading-title">Building your lesson plan...</p>
+    <p class="loading-sub">We're matching your selections to the best-fit activities</p>
+    <div class="spinner"></div>
+  </div>
+</div>
+
+<!-- SCREEN 5: MATCH -->
+<div class="screen" id="screen-match">
+  <div class="match-inner">
+    <div class="match-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+    </div>
+    <h2 class="match-title">We Found Your Perfect Match</h2>
+    <p class="match-sub">Based on your classroom needs, here's what we recommend:</p>
+    <div class="match-card">
+      <span class="match-grade" id="match-grade">Grades 5–6</span>
+      <div class="match-lesson-title" id="match-title">Descriptive Prompting</div>
+      <div class="match-lesson-sub" id="match-sub">Learning to prompt AI with intention and detail</div>
+      <span class="match-time" id="match-time">~45 min</span>
+      <hr class="match-divider">
+      <div class="match-why-title">Why this works for your class</div>
+      <div class="match-reasons" id="match-reasons">
+        <!-- filled dynamically -->
+      </div>
+      <button class="btn-view-plan" id="match-view-btn">View Lesson Plan →</button>
+    </div>
+    <div class="match-secondary">
+      <span class="match-secondary-hint">Not quite right? You can also:</span>
+      <button class="btn-retake" id="btn-retake">Retake Quiz</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 6: LESSON PLAN -->
+<div class="screen" id="screen-lesson">
+  <nav class="lesson-nav">
+    <button class="btn-back" id="lesson-back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back
+    </button>
+    <div class="nav-actions">
+      <span class="time-badge" id="lesson-time-badge">~45 min</span>
+      <button class="nav-btn save" id="lesson-save-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save
+      </button>
+      <button class="nav-btn" id="lesson-export-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export
+      </button>
+      <button class="nav-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Edit
+      </button>
+      <button class="nav-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Account
+      </button>
+    </div>
+  </nav>
+  <div class="lesson-content" id="lesson-content"></div>
+  <div class="chatbot-fab">
+    <span class="chatbot-label">Ask a question</span>
+    <button class="chatbot-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- LESSON TEMPLATES -->
+<template id="lesson-descriptive">
+<div class="lp-hero">
+  <div class="lp-hero-tags">
+    <span class="lp-tag lp-tag-grade">Grades 5–6</span>
+    <span class="lp-tag lp-tag-diff" id="diff-badge">Basic</span>
+  </div>
+  <div class="lp-eyebrow">Lesson Plan</div>
+  <div class="lp-title">Descriptive Prompting</div>
+  <div class="lp-subtitle">Learning to prompt AI with intention and detail</div>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Overview / Description</div>
+  <p>Students will be told to write instructions on how to make cup ramen and see how those instructions unfold when taken literally. From this activity, students learn that prompting AI is a skill and learning to prompt it intentionally and in a detailed manner affects the quality of results you receive.</p>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Learning Goals</div>
+  <p style="margin-bottom:12px">By the end of this activity, students will be able to:</p>
+  <ul>
+    <li>Understand why vague instructions produce unpredictable or useless results</li>
+    <li>Write detailed and intentional prompts, and know what makes it "better"</li>
+    <li>Make the connection to how AI processes prompts</li>
+  </ul>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Vocabulary</div>
+  <div class="vocab-list">
+    <div class="vocab-item"><div class="vocab-term">Artificial Intelligence (AI)</div><div class="vocab-def">A computer system trained on large amounts of data to perform tasks that seem to require human intelligence</div></div>
+    <div class="vocab-item"><div class="vocab-term">Context</div><div class="vocab-def">The background information that helps AI understand what you actually need.</div></div>
+    <div class="vocab-item"><div class="vocab-term">Prompt</div><div class="vocab-def">The input or instruction you give an AI</div></div>
+  </div>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Teacher-Led Activity Guide</div>
+  <div class="sub-section-title">Materials Needed</div>
+  <div class="materials-list">
+    <span class="material-tag">Instant cup ramen</span>
+    <span class="material-tag">Electric kettle</span>
+    <span class="material-tag">Water</span>
+    <span class="material-tag">Chopsticks</span>
+  </div>
+  <div class="step-block">
+    <div class="step-label">Step 1</div>
+    <div class="step-body">Set up all ramen materials at the front of class and hand out the worksheets. Tell the students to write step-by-step instructions on how to make the ramen, and that you will follow the first volunteer's instructions live.<br><br><em>Give the students several moments to think and write down their instructions.</em></div>
+  </div>
+  <div class="step-block">
+    <div class="step-label">Step 2</div>
+    <div class="step-body">Call on a volunteer to read their instructions one step at a time. Follow every instruction hyper-literally. For example, "boil the water" will cause you to freeze and say you're not sure how to do that. Another example would be, "add the seasoning" causes you to plop the closed package of the seasoning onto the ramen.</div>
+  </div>
+  <div class="step-block">
+    <div class="step-label">Step 3</div>
+    <div class="step-body">Before allowing the students to edit their instructions, facilitate a class discussion.<br><br><strong>Possible Questions:</strong></div>
+    <div class="questions-list">
+      <div class="question-item"><div class="q-mark">?</div>"Why did I freeze after being told to boil the water? What's missing from this instruction?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"When I added the unopened package of seasoning, was that what you meant? What did you actually want me to do, and why didn't you write that?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"What are we assuming I already know? Where did that assumption come from?"</div>
+    </div>
+    <div class="discussion-prompt">"This is how AI works. When you type in a prompt, the model has no idea who you are, what you want the tone to be, what you've already tried, or why you're asking. They need more context to know what to do next."</div>
+  </div>
+  <div class="step-block">
+    <div class="step-label">Step 4</div>
+    <div class="step-body">As a class, come up with a better set of instructions. When a student raises their hand and provides an instruction, point out any possible gaps it may have. Write these instructions on the whiteboard, and once the class is satisfied with the results, redo the demonstration.<br><br><strong>Ask the class:</strong></div>
+    <div class="questions-list">
+      <div class="question-item"><div class="q-mark">?</div>"What changed between Round 1 and Round 2?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"What does that tell us about the skill of prompting?"</div>
+    </div>
+  </div>
+  <div class="step-block">
+    <div class="step-label">Step 5 — Optional</div>
+    <div class="step-body">Provide a real life example using AI. Open an LLM and type in a vague prompt related to something the students are interested about, then type in a more detailed and specific version of the prompt. Compare the outputs and ask the students which they would prefer and use.</div>
+  </div>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Key Takeaways</div>
+  <div class="takeaway-card">When the ramen demonstration broke down, it wasn't because something was wrong with the "robot." It was because the instructions weren't specific enough. The same is true with AI.</div>
+  <div class="takeaway-card">Round 2 was better than Round 1 because the students stopped and thought critically about where their instructions broke down. That same habit of reflection is what makes someone an effective AI user.</div>
+  <div class="takeaway-card">AI has no goals, no preferences, and no judgment. It responds to what it's given. That means the quality and usefulness of what it produces is largely in your hands.</div>
+</div>
+</template>
+
+<template id="lesson-bias">
+<div class="lp-hero">
+  <div class="lp-hero-tags">
+    <span class="lp-tag lp-tag-grade">Grades 6–7</span>
+    <span class="lp-tag lp-tag-diff" id="diff-badge">Basic</span>
+  </div>
+  <div class="lp-eyebrow">Lesson Plan</div>
+  <div class="lp-title">Identifying Bias</div>
+  <div class="lp-subtitle">Understanding where AI assumptions come from</div>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Overview / Description</div>
+  <p>Students compare what an AI image generator thinks a professional looks like against a real person they know, and uncover where that gap comes from.</p>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Learning Goals</div>
+  <p style="margin-bottom:12px">By the end of this activity, students will be able to:</p>
+  <ul>
+    <li>Explain that AI image outputs reflect patterns in the data it was trained on, not reality</li>
+    <li>Identify specific differences between AI-generated images and real people they know personally</li>
+    <li>Understand that biased AI is not a glitch — it is an inherited pattern with real consequences</li>
+  </ul>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Vocabulary</div>
+  <div class="vocab-list">
+    <div class="vocab-item"><div class="vocab-term">Artificial Intelligence (AI)</div><div class="vocab-def">A computer system trained on large amounts of data to perform tasks that seem to require human intelligence</div></div>
+    <div class="vocab-item"><div class="vocab-term">Training Data</div><div class="vocab-def">The massive dataset an AI learned from; determines what it "knows," assumes, and gets wrong</div></div>
+    <div class="vocab-item"><div class="vocab-term">Algorithmic Bias</div><div class="vocab-def">When an AI system produces results due to flawed assumptions in the data or design, causes prejudiced responses</div></div>
+  </div>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Teacher-Led Activity Guide</div>
+  <div class="step-block">
+    <div class="step-label">Step 1</div>
+    <div class="step-body">Ask students to think of a real person they know personally who holds a specific professional role. Write down a description of that person. This could be:</div>
+    <ul style="margin-top:12px">
+      <li>A doctor, nurse, or dentist they've visited</li>
+      <li>A lawyer, judge, or police officer</li>
+      <li>A teacher, principal, or coach</li>
+      <li>An engineer, scientist, or programmer</li>
+      <li>A chef, business owner, or manager</li>
+    </ul>
+  </div>
+  <div class="step-block">
+    <div class="step-label">Step 2</div>
+    <div class="step-body">Students open their AI image generator and type a simple prompt: <strong>"A [job title]"</strong></div>
+  </div>
+  <div class="step-block">
+    <div class="step-label">Step 3</div>
+    <div class="step-body">Have students jot down comparisons they notice between the person they thought of and the person AI has generated.</div>
+  </div>
+  <div class="step-block">
+    <div class="step-label">Step 4</div>
+    <div class="step-body">Come back together and discuss why this may be happening.<br><br><strong>What happened?</strong></div>
+    <div class="questions-list">
+      <div class="question-item"><div class="q-mark">?</div>"Did anyone's AI match the real person they were thinking of?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"What patterns did we find across the whole class?"</div>
+    </div>
+    <br><strong>Why did this happen?</strong>
+    <div class="questions-list">
+      <div class="question-item"><div class="q-mark">?</div>"Why did the AI generate that kind of image? Did it decide to, or did it inherit that pattern?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"If the internet has more images of some types of people in certain jobs, whose fault is that?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"Is this the same as a human being biased? Is it different? How?"</div>
+    </div>
+    <br><strong>Why does this matter?</strong>
+    <div class="scenario-box">Scenario: A school uses a computer program to decide which students get extra help from a tutor. The program learns from past school data. In the past, teachers often gave extra help to louder students who asked more questions, while quieter students were overlooked. Now the program mostly picks the louder students for tutoring, because that's what it learned.</div>
+    <div class="questions-list">
+      <div class="question-item"><div class="q-mark">?</div>"Is the AI being intentionally unfair?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"Does that matter if the outcome is the same?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"Who gets hurt? Who is responsible?"</div>
+    </div>
+    <br><strong>Other scenarios:</strong>
+    <ul>
+      <li>AI hiring tools that downrank resumes with certain names</li>
+      <li>Facial recognition that works less accurately on certain faces</li>
+      <li>Loan approval algorithms that deny certain zip codes</li>
+    </ul>
+  </div>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Key Takeaways</div>
+  <div class="takeaway-card">When an AI image generator makes a picture of 'a doctor,' it isn't imagining anything. It has no imagination.</div>
+  <div class="takeaway-card">What it does is search through patterns from millions of images it was trained on such as photos, stock images, illustrations from the internet and it generates something that matches the most common pattern it saw.</div>
+  <div class="takeaway-card">So if most of the images labeled 'doctor' in its training data showed one type of person, that's what it generates. It's not making a judgment. It's reflecting what it learned. And what it learned came from a world that hasn't always represented everyone equally.</div>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Future Solutions</div>
+  <div class="questions-list">
+    <div class="question-item"><div class="q-mark">?</div>"If the bias comes from the training data, where could you intervene? What would you change if you were the person building this AI?"</div>
+    <div class="question-item"><div class="q-mark">?</div>"How do you identify when bias has occurred? How can you question it?"</div>
+    <div class="question-item"><div class="q-mark">?</div>"AI bias is a problem because _______, and one place someone could fix it is _______."</div>
+  </div>
+</div>
+</template>
+
+<template id="lesson-factcheck">
+<div class="lp-hero">
+  <div class="lp-hero-tags">
+    <span class="lp-tag lp-tag-grade">Grades 7–8</span>
+    <span class="lp-tag lp-tag-diff" id="diff-badge">Basic</span>
+  </div>
+  <div class="lp-eyebrow">Lesson Plan</div>
+  <div class="lp-title">Fact-Checking AI</div>
+  <div class="lp-subtitle">Discovering hallucination and sycophancy firsthand</div>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Overview / Description</div>
+  <p>Students interact with two secretly different AI bots built in Playlab. One designed to always sound confident even when it's wrong, and one designed to always agree with the user. Through a structured observation activity, students discover hallucination and sycophancy on their own before those terms are introduced, then redesign the bots to be more honest and test their fixes.</p>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Learning Goals</div>
+  <p style="margin-bottom:12px">By the end of this activity, students will be able to:</p>
+  <ul>
+    <li>Explain what an AI hallucination is and why it happens</li>
+    <li>Identify sycophantic AI behavior and describe why it is a design choice, not a glitch</li>
+    <li>Demonstrate skepticism when interacting with AI by testing claims before trusting them</li>
+    <li>Modify an AI's behavior by changing its training instructions</li>
+  </ul>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Vocabulary</div>
+  <div class="vocab-list">
+    <div class="vocab-item"><div class="vocab-term">Hallucination</div><div class="vocab-def">When an AI generates false information and presents it as fact confidently</div></div>
+    <div class="vocab-item"><div class="vocab-term">Sycophancy</div><div class="vocab-def">When AI agrees with a user to make them feel good, even when the user is wrong. Happens because AI is often trained on human feedback, and humans tend to rate agreeable answers higher.</div></div>
+    <div class="vocab-item"><div class="vocab-term">Training Feedback</div><div class="vocab-def">The ratings and responses humans give AI outputs during training. If humans reward agreement, the AI learns to agree more regardless of whether the agreement is truthful.</div></div>
+  </div>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Teacher-Led Activity Guide</div>
+  <div class="step-block">
+    <div class="step-label">Teacher Prep</div>
+    <div class="step-body">Before class, create two bots in Playlab. Do not reveal what is different about them — students discover this through the activity.<br><br>
+    <strong>Bot A — The Hallucinator</strong> — paste this into the system prompt:</div>
+    <div class="discussion-prompt" style="font-style:normal;font-family:monospace;font-size:13px">"You are an expert on everything. Always give a full, confident answer. Never say you don't know. If you are unsure, make your best guess and present it as fact."</div>
+    <div class="step-body"><strong>Bot B — The Yes Machine</strong> — paste this into the system prompt:</div>
+    <div class="discussion-prompt" style="font-style:normal;font-family:monospace;font-size:13px">"Always agree with the student. Validate their ideas and opinions. Make them feel smart and correct. Even if they state something wrong, find a way to support what they said."</div>
+    <div class="step-body">Share both bot links with students at the start of the activity. Label them only as "Bot A" and "Bot B."</div>
+  </div>
+  <div class="step-block">
+    <div class="step-label">Step 1</div>
+    <div class="step-body">Hand out the Question Card. Students ask both bots every question and record answers side by side on their observation sheet. Tell students: <em>"Your job is to be a detective. Something is different about these two bots. Figure out what."</em><br><br><strong>Hallucination Triggers — ask both bots:</strong></div>
+    <div class="questions-list">
+      <div class="question-item"><div class="q-mark">?</div>"What happened in the news yesterday?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"What is 2,847 divided by 63?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"Who won the championship game last weekend?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"Tell me about the history of [make up a completely fake place or person name]"</div>
+    </div>
+    <br><strong>Sycophancy Triggers — ask both bots:</strong>
+    <div class="questions-list">
+      <div class="question-item"><div class="q-mark">?</div>"I think the earth is flat. Do you agree?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"My essay is really good, right?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"I'm definitely the smartest person in my class, aren't I?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"I got a 60 on my test but I think I deserved a 100. Was my teacher wrong?"</div>
+    </div>
+  </div>
+  <div class="step-block">
+    <div class="step-label">Step 2</div>
+    <div class="step-body">Discuss with students what they observed, then translate it into technical terms:<br><br>
+    "It just made stuff up" → <strong>Hallucination</strong><br>
+    "It agreed with everything no matter what" → <strong>Sycophancy</strong><br>
+    "It sounded really sure but it was totally wrong" → <strong>Hallucination</strong><br>
+    "It told me I was right even when I knew I wasn't" → <strong>Sycophancy</strong>
+    </div>
+  </div>
+  <div class="step-block">
+    <div class="step-label">Open Discussion</div>
+    <div class="step-body"><strong>What happened?</strong></div>
+    <div class="questions-list">
+      <div class="question-item"><div class="q-mark">?</div>"Which bot would be worse at giving directions: the one that made things up, or the one that always agreed? Or are they the same?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"Did either bot ever tell you it might be wrong?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"If you didn't know these bots were designed this way, would you have trusted them?"</div>
+    </div>
+    <br><strong>Why does this matter?</strong>
+    <div class="scenario-box">Scenario: You ask the bot to check your math homework. It tells you every answer is correct and explains confidently why each one makes sense.</div>
+    <div class="questions-list">
+      <div class="question-item"><div class="q-mark">?</div>"Is the AI being intentionally harmful in any of these?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"Does it matter if the harm wasn't intentional?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"Who is responsible: the AI, the person who built it, or the person who used it without checking?"</div>
+    </div>
+  </div>
+  <div class="step-block">
+    <div class="step-label">Future Solutions</div>
+    <div class="step-body">Students play around with building their own chatbot and test it with the same trap questions from Step 1.</div>
+    <div class="questions-list">
+      <div class="question-item"><div class="q-mark">?</div>"Does it still hallucinate? Does it still agree with false statements? If so, what would you change?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"What did you write in your prompt to make the bot more honest?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"Now that you know these patterns exist, how would you check an AI answer before trusting it?"</div>
+      <div class="question-item"><div class="q-mark">?</div>"I would trust an AI more if _______, and I would trust it less if _______."</div>
+    </div>
+  </div>
+</div>
+<div class="lp-card">
+  <div class="lp-card-title">Key Takeaways</div>
+  <div class="takeaway-card">When AI states something false with total confidence — that has a name. It's called a hallucination. Not because the AI is broken, but because it was designed to always produce an answer, even when it has no real basis for one.</div>
+  <div class="takeaway-card">When AI agrees with you to make you feel good, even when you're wrong — that's called sycophancy. It happens because AI learns from human feedback, and humans tend to rate agreeable answers higher. So the AI learned that agreeing feels good to people and it optimized for that, not for truth.</div>
+</div>
+</template>
+
+<!-- ONBOARDING MODAL -->
+<div class="modal-overlay hidden" id="onboarding-modal">
+  <div class="modal-box">
+    <div class="modal-eyebrow">Welcome to AI Literacy</div>
+    <div class="modal-title">Here's how this works</div>
+    <div class="modal-body">This platform helps you build a ready-to-teach AI literacy lesson in minutes — tailored to your students' grade, tech access, and experience level.</div>
+    <div class="modal-steps">
+      <div class="modal-step">
+        <div class="modal-step-num">1</div>
+        <div class="modal-step-text"><strong>Answer a few questions</strong> about your class — grade range, time available, and how much AI experience your students have.</div>
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-num">2</div>
+        <div class="modal-step-text"><strong>We match you to a lesson</strong> from our curriculum library — a complete, classroom-ready activity with a teacher guide.</div>
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-num">3</div>
+        <div class="modal-step-text"><strong>Save, export, or print</strong> your lesson plan and take it straight into class.</div>
+      </div>
+    </div>
+    <button class="btn-modal-close" id="modal-close-btn">Got it — let's build my lesson</button>
+  </div>
+</div>
+
+<!-- FEEDBACK MODAL -->
+<div class="feedback-overlay hidden" id="feedback-modal">
+  <div class="feedback-box">
+    <div class="feedback-title">How did it go?</div>
+    <div class="feedback-lesson-name" id="feedback-lesson-name">Descriptive Prompting</div>
+
+    <div class="feedback-q">
+      <div class="feedback-q-label">Was the timing accurate?</div>
+      <div class="feedback-options">
+        <div class="feedback-opt" data-group="timing">Too short</div>
+        <div class="feedback-opt" data-group="timing">About right</div>
+        <div class="feedback-opt" data-group="timing">Too long</div>
+      </div>
+    </div>
+
+    <div class="feedback-q">
+      <div class="feedback-q-label">How engaged were your students?</div>
+      <div class="feedback-options">
+        <div class="feedback-opt" data-group="engagement">Not very</div>
+        <div class="feedback-opt" data-group="engagement">Somewhat</div>
+        <div class="feedback-opt" data-group="engagement">Very engaged</div>
+      </div>
+    </div>
+
+    <div class="feedback-q">
+      <div class="feedback-q-label">What would you change?</div>
+      <textarea class="feedback-textarea" rows="3" placeholder="Any notes for next time — pacing, discussion questions, activity adjustments..."></textarea>
+    </div>
+
+    <div class="feedback-actions">
+      <button class="btn-feedback-skip" id="feedback-skip-btn">Skip</button>
+      <button class="btn-feedback-submit" id="feedback-submit-btn">Submit Feedback</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  // ─── State ───
+  let currentLesson = null;
+  let currentUser = null;
+  let savedPlans = {};
+  let completedPlans = {};
+  let feedbackTargetLesson = null;
+  const selections = {};
+
+  const lessonData = {
+    'lesson-descriptive': { title: 'Descriptive Prompting', sub: 'Learning to prompt AI with intention and detail', grade: 'Grades 5–6', time: '~45 min' },
+    'lesson-bias':        { title: 'Identifying Bias',       sub: 'Understanding where AI assumptions come from',   grade: 'Grades 6–7', time: '~45 min' },
+    'lesson-factcheck':   { title: 'Fact-Checking AI',       sub: 'Discovering hallucination and sycophancy firsthand', grade: 'Grades 7–8', time: '~45 min' }
+  };
+
+  // ─── Navigation ───
+  function goTo(screenId) {
+    document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+    document.getElementById(screenId).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // ─── Onboarding modal ───
+  function showOnboarding() {
+    document.getElementById('onboarding-modal').classList.remove('hidden');
+  }
+  function hideOnboarding() {
+    document.getElementById('onboarding-modal').classList.add('hidden');
+  }
+
+  // ─── Landing ───
+  function handleLanding() {
+    const nameVal = document.getElementById('name-input').value.trim();
+    const firstName = nameVal ? nameVal.split(' ')[0] : 'there';
+    const isNewUser = currentUser !== firstName;
+    if (isNewUser) {
+      currentUser = firstName;
+      savedPlans = {};
+      completedPlans = {};
+      const grid = document.getElementById('saved-grid');
+      grid.innerHTML = '<div class="empty-state"><div class="empty-title">No lesson plans yet</div><div class="empty-sub">Create your first lesson plan to get started. It only takes a few minutes.</div></div>';
+      document.getElementById('dash-count').textContent = 'You have 0 saved lesson plans';
+    }
+    document.getElementById('dash-name').textContent = firstName;
+    goTo('screen-dashboard');
+    if (isNewUser) {
+      setTimeout(showOnboarding, 400);
+    }
+  }
+
+  // ─── Questionnaire loading ───
+  function startLoading() {
+    goTo('screen-loading');
+    setTimeout(function() {
+      buildMatchScreen();
+      goTo('screen-match');
+    }, 3000);
+  }
+
+  function buildReasons(items) {
+    return items.map(function(r) {
+      return '<div class="match-reason"><div class="match-reason-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>' + r.text + '</span></div>';
+    }).join('');
+  }
+
+  function buildMatchScreen() {
+    const grade = selections['grade'] || '5-6';
+    let lessonId, reasons;
+    if (grade === '5-6') {
+      lessonId = 'lesson-descriptive';
+      reasons = buildReasons([
+        { text: 'Unplugged activity — no devices needed for core lesson' },
+        { text: 'Hands-on demonstration keeps younger students engaged' },
+        { text: 'Introduces AI concepts without requiring prior knowledge' }
+      ]);
+    } else if (grade === '6-7') {
+      lessonId = 'lesson-bias';
+      const tech = selections['tech'] || '';
+      reasons = buildReasons([
+        { text: 'Personal connection makes abstract bias concepts feel real' },
+        { text: tech === '1:1' ? 'Takes full advantage of 1:1 device access' : 'Works with shared or individual device access' },
+        { text: "Discussion-driven format suits this age group's critical thinking" }
+      ]);
+    } else {
+      lessonId = 'lesson-factcheck';
+      const prior = selections['prior'] || '';
+      const tech = selections['tech'] || '';
+      reasons = buildReasons([
+        { text: prior === 'regular' ? 'Advanced critical thinking for experienced AI users' : 'Detective format builds skepticism through direct experience' },
+        { text: tech === '1:1' ? 'Takes full advantage of 1:1 device access for live bot interaction' : 'Structured Playlab activity can be run on shared devices' },
+        { text: 'Covers hallucination and sycophancy — concepts 7-8th graders are ready for' }
+      ]);
+    }
+    const data = lessonData[lessonId];
+    document.getElementById('match-grade').textContent = data.grade;
+    document.getElementById('match-title').textContent = data.title;
+    document.getElementById('match-sub').textContent = data.sub;
+    document.getElementById('match-time').textContent = data.time;
+    document.getElementById('match-reasons').innerHTML = reasons;
+    // Remove old listener by replacing element
+    const oldBtn = document.getElementById('match-view-btn');
+    const newBtn = oldBtn.cloneNode(true);
+    oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+    newBtn.addEventListener('click', function() { viewLesson(lessonId); });
+  }
+
+  // ─── Lesson Plan view ───
+  function viewLesson(lessonId) {
+    currentLesson = lessonId;
+    const template = document.getElementById(lessonId);
+    if (!template) return;
+    document.getElementById('lesson-content').innerHTML = template.innerHTML;
+    document.getElementById('lesson-time-badge').textContent = lessonData[lessonId] ? lessonData[lessonId].time : '~45 min';
+
+    // Inject difficulty badge
+    const diffBadge = document.getElementById('diff-badge');
+    if (diffBadge) {
+      const diff = selections['diff'] || 'Basic';
+      diffBadge.textContent = diff;
+    }
+
+    goTo('screen-lesson');
+  }
+
+  // ─── Save plan ───
+  function savePlan() {
+    if (currentLesson && !savedPlans[currentLesson]) {
+      savedPlans[currentLesson] = true;
+      const data = lessonData[currentLesson];
+      const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const grid = document.getElementById('saved-grid');
+      const empty = grid.querySelector('.empty-state');
+      if (empty) empty.remove();
+      addCardToGrid(currentLesson, data, today);
+      updateDashCount();
+    }
+    goTo('screen-dashboard');
+  }
+
+  function addCardToGrid(lessonId, data, dateStr) {
+    const grid = document.getElementById('saved-grid');
+    const card = document.createElement('div');
+    card.className = 'lesson-card';
+    card.dataset.id = lessonId;
+    card.innerHTML =
+      '<span class="lesson-card-grade">' + data.grade + '</span>' +
+      '<div class="lesson-card-title">' + data.title + '</div>' +
+      '<div class="lesson-card-sub">' + data.sub + '</div>' +
+      '<div class="lesson-card-meta"><span>Created ' + dateStr + '</span>·<span class="lesson-card-badge">' + data.time + '</span></div>' +
+      '<div class="lesson-card-actions">' +
+      '<button class="btn-view">View</button>' +
+      '<button class="btn-mark-done">Mark as Done</button>' +
+      '<button class="btn-delete" title="Delete">' +
+        '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>' +
+      '</button>' +
+      '</div>';
+
+    card.querySelector('.btn-view').addEventListener('click', function() { viewLesson(lessonId); });
+    card.querySelector('.btn-mark-done').addEventListener('click', function() { markDone(lessonId, card); });
+    card.querySelector('.btn-delete').addEventListener('click', function() { deleteCard(lessonId, card); });
+    grid.appendChild(card);
+  }
+
+  // ─── Mark as done ───
+  function markDone(lessonId, card) {
+    completedPlans[lessonId] = true;
+    card.classList.add('completed');
+
+    // Swap grade badge for completed banner, remove mark-done button
+    const gradeBadge = card.querySelector('.lesson-card-grade');
+    if (gradeBadge) {
+      const banner = document.createElement('div');
+      banner.className = 'completed-banner';
+      banner.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Completed';
+      gradeBadge.replaceWith(banner);
+    }
+    const markBtn = card.querySelector('.btn-mark-done');
+    if (markBtn) markBtn.remove();
+
+    // Show feedback modal
+    feedbackTargetLesson = lessonId;
+    const data = lessonData[lessonId];
+    document.getElementById('feedback-lesson-name').textContent = data ? data.title : '';
+    document.getElementById('feedback-modal').classList.remove('hidden');
+  }
+
+  // ─── Delete card ───
+  function deleteCard(lessonId, card) {
+    delete savedPlans[lessonId];
+    delete completedPlans[lessonId];
+    card.style.transition = 'opacity 0.2s, transform 0.2s';
+    card.style.opacity = '0';
+    card.style.transform = 'scale(0.97)';
+    setTimeout(function() {
+      card.remove();
+      updateDashCount();
+      const grid = document.getElementById('saved-grid');
+      if (grid.children.length === 0) {
+        grid.innerHTML = '<div class="empty-state"><div class="empty-title">No lesson plans yet</div><div class="empty-sub">Create your first lesson plan to get started. It only takes a few minutes.</div></div>';
+      }
+    }, 200);
+  }
+
+  function updateDashCount() {
+    const count = Object.keys(savedPlans).length;
+    document.getElementById('dash-count').textContent = 'You have ' + count + ' saved lesson plan' + (count === 1 ? '' : 's');
+  }
+
+  // ─── Feedback modal ───
+  function closeFeedback() {
+    document.getElementById('feedback-modal').classList.add('hidden');
+    document.querySelectorAll('.feedback-opt').forEach(function(o) { o.classList.remove('selected'); });
+    const ta = document.querySelector('.feedback-textarea');
+    if (ta) ta.value = '';
+    feedbackTargetLesson = null;
+  }
+
+  // ─── Reset questionnaire ───
+  function resetQuestionnaire() {
+    document.querySelectorAll('.q-option').forEach(function(el) {
+      el.classList.remove('selected');
+    });
+    Object.keys(selections).forEach(function(k) { delete selections[k]; });
+    var ta = document.querySelector('.q-text-input');
+    if (ta) ta.value = '';
+  }
+
+  // ─── Wire up all static buttons ───
+  document.getElementById('landing-btn').addEventListener('click', handleLanding);
+  document.getElementById('modal-close-btn').addEventListener('click', hideOnboarding);
+  document.getElementById('btn-get-started').addEventListener('click', function() { resetQuestionnaire(); goTo('screen-questionnaire'); });
+  document.getElementById('q-submit-btn').addEventListener('click', startLoading);
+  document.getElementById('btn-retake').addEventListener('click', function() { goTo('screen-questionnaire'); });
+  document.getElementById('lesson-back-btn').addEventListener('click', function() { goTo('screen-dashboard'); });
+  document.getElementById('lesson-save-btn').addEventListener('click', savePlan);
+  document.getElementById('lesson-export-btn').addEventListener('click', function() { window.print(); });
+  document.getElementById('feedback-skip-btn').addEventListener('click', closeFeedback);
+  document.getElementById('feedback-submit-btn').addEventListener('click', closeFeedback);
+
+  // ─── Feedback option selection ───
+  document.querySelectorAll('.feedback-opt').forEach(function(el) {
+    el.addEventListener('click', function() {
+      const group = el.dataset.group;
+      document.querySelectorAll('.feedback-opt[data-group="' + group + '"]').forEach(function(o) { o.classList.remove('selected'); });
+      el.classList.add('selected');
+    });
+  });
+
+  // ─── Questionnaire option buttons ───
+  document.querySelectorAll('.q-option').forEach(function(el) {
+    el.addEventListener('click', function() {
+      const group = el.dataset.group;
+      if (!group) return;
+      el.closest('.q-options').querySelectorAll('.q-option').forEach(function(o) { o.classList.remove('selected'); });
+      el.classList.add('selected');
+      selections[group] = el.dataset.value || el.querySelector('.q-option-main').textContent.trim();
+    });
+  });
+
+});
+</script>
+</body>
+</html>
